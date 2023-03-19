@@ -1,8 +1,0 @@
-<testsuites name="results">
-  <testsuite name="all" package="all">
-    <property name="random_seed" value="1678193672" />
-    <testcase name="test_reg" classname="test_reg" file="/home/patricab/projects/8bit-verilog/src/components/sim/test_reg.py" lineno="6" time="0.0012845993041992188" sim_time_ns="0.001" ratio_time="0.778452858203415">
-      <failure message="Test failed with RANDOM_SEED=1678193672" />
-    </testcase>
-  </testsuite>
-</testsuites>

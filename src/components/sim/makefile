@@ -1,5 +1,5 @@
 TOPLEVEL_LANG = verilog
-VERILOG_SOURCES = ../rtl/Reg.v
+VERILOG_SOURCES = ../rtl/*.sv
 TOPLEVEL = Reg
 MODULE = test_reg
 
