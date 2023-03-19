@@ -16,14 +16,12 @@ async def test_reg(dut):
     dut.rst = 1
     await Timer(10, units="us")
     dut.rst = 0
-    await Timer(10, units="us")
     dut.load_n = 0
-    await Timer(10, units="us")
-
     dut.reg_in = reg_check
     await Timer(10, units="us")
+    
     dut.load_n = 1
-    await Timer(20, units="us")
+    await Timer(10, units="us")
     dut.enable_n = 0
     await RisingEdge(dut.clk)
     print(dut.reg_out.value.binstr)

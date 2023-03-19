@@ -29,9 +29,9 @@ begin
 end
 
 // Dump waves
-initial begin
-    $dumpfile("dump.vcd");
-    $dumpvars(1, Reg);
-end
+// initial begin
+//     $dumpfile("dump.vcd");
+//     $dumpvars(1, Reg);
+// end
 
 endmodule
