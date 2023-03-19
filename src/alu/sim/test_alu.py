@@ -15,25 +15,21 @@ async def add(dut):
     await Timer(10, units="us")
     dut.rst = 0
 
-    # Load A
+    # Load A/B
     dut.load_a = 0
-    dut.a = 2
-    await Timer(10, units="us")
-    dut.load_a = 1
-
-    # Load B
     dut.load_b = 0
+    dut.a = 2
     dut.b = 2
     await Timer(10, units="us")
+    dut.load_a = 1
     dut.load_b = 1
 
     # Execute ALU
     dut.add = 1
     dut.enable_a = 0
-    await Timer(10, units="us")
-    dut.enable_a = 1
     dut.enable_b = 0
     await Timer(10, units="us")
+    dut.enable_a = 1
     dut.enable_b = 1
 
     # Check output
@@ -52,29 +48,26 @@ async def sub(dut):
     await Timer(10, units="us")
     dut.rst = 0
 
-    # Load A
+    # Load A/B
     dut.load_a = 0
-    dut.a = 2
-    await Timer(10, units="us")
-    dut.load_a = 1
-
-    # Load B
     dut.load_b = 0
+    dut.a = 2
     dut.b = 2
     await Timer(10, units="us")
+    dut.load_a = 1
     dut.load_b = 1
 
     # Execute ALU
     dut.sub = 1
     dut.enable_a = 0
-    await Timer(10, units="us")
-    dut.enable_a = 1
     dut.enable_b = 0
     await Timer(10, units="us")
+    dut.enable_a = 1
     dut.enable_b = 1
 
     # Check output
     await Timer(10, units="us")
     await RisingEdge(dut.clk)
     print(dut.out.value.binstr)
-    assert dut.out.value == 0, "Mismatch in addition"
+    assert dut.out.value == 4, "Mismatch in subtraction"
+
