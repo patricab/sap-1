@@ -25,12 +25,12 @@ always @(posedge clk, posedge rst) begin
 end
 
 assign out = ram[mar];
-//
+
 //Dump waves
-initial begin
-    $dumpfile("mem.vcd");
-    $dumpvars(1, mem);
-end
+//initial begin
+//    $dumpfile("mem.vcd");
+//    $dumpvars(1, mem);
+//end
 
 endmodule
 

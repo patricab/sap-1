@@ -14,7 +14,7 @@ async def test_mem(dut):
     await Timer(10, units="us")
     dut.rst = 0
 
-    for i in range(0, 15):
+    for i in range(0, 16):
         dut.bus = i
         dut.load = 1
         await Timer(20, units="us")
