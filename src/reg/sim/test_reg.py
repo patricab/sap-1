@@ -11,18 +11,16 @@ async def test_reg(dut):
     cocotb.start_soon(clock.start())  # Start the clock
     reg_check = 255
 
-    dut.enable_n = 1
-    dut.load_n = 1
+    dut.load = 0
     dut.rst = 1
     await Timer(10, units="us")
     dut.rst = 0
-    dut.load_n = 0
+    dut.load = 1
     dut.reg_in = reg_check
     await Timer(10, units="us")
     
-    dut.load_n = 1
+    dut.load = 0
     await Timer(10, units="us")
-    dut.enable_n = 0
     await RisingEdge(dut.clk)
     print(dut.reg_out.value.binstr)
     assert dut.reg_out.value == reg_check, "No output match!"

@@ -11,26 +11,22 @@ async def add(dut):
     cocotb.start_soon(clock.start())  # Start the clock
     dut.rst = 1
     dut.add = dut.sub = 0
-    dut.load_a = dut.load_b = dut.enable_a = dut.enable_b = 1
+    dut.load_a = dut.load_b = 0
     await Timer(10, units="us")
     dut.rst = 0
 
     # Load A/B
-    dut.load_a = 0
-    dut.load_b = 0
+    dut.load_a = 1
+    dut.load_b = 1
     dut.a = 2
     dut.b = 2
     await Timer(10, units="us")
-    dut.load_a = 1
-    dut.load_b = 1
+    dut.load_a = 0
+    dut.load_b = 0
 
     # Execute ALU
     dut.add = 1
-    dut.enable_a = 0
-    dut.enable_b = 0
     await Timer(10, units="us")
-    dut.enable_a = 1
-    dut.enable_b = 1
 
     # Check output
     await Timer(10, units="us")
@@ -44,26 +40,22 @@ async def sub(dut):
     cocotb.start_soon(clock.start())  # Start the clock
     dut.rst = 1
     dut.add = dut.sub = 0
-    dut.load_a = dut.load_b = dut.enable_a = dut.enable_b = 1
+    dut.load_a = dut.load_b = 0
     await Timer(10, units="us")
     dut.rst = 0
 
     # Load A/B
-    dut.load_a = 0
-    dut.load_b = 0
+    dut.load_a = 1
+    dut.load_b = 1
     dut.a = 2
     dut.b = 2
     await Timer(10, units="us")
-    dut.load_a = 1
-    dut.load_b = 1
+    dut.load_a = 0
+    dut.load_b = 0
 
     # Execute ALU
     dut.sub = 1
-    dut.enable_a = 0
-    dut.enable_b = 0
     await Timer(10, units="us")
-    dut.enable_a = 1
-    dut.enable_b = 1
 
     # Check output
     await Timer(10, units="us")
