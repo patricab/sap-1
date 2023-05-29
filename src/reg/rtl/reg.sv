@@ -1,4 +1,4 @@
-module Reg #(regff
+module Reg #(
     parameter WIDTH = 8
 ) (
     input logic clk, rst,
