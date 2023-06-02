@@ -2,7 +2,7 @@ module Reg #(
     parameter WIDTH = 8
 ) (
     input logic clk, rst,
-    input logic load,
+    input logic load, enable,
     input logic [WIDTH-1:0] reg_in,
     output logic [WIDTH-1:0] reg_out
 );
@@ -15,12 +15,12 @@ begin
     if (rst) begin
        internal <= 8'b0;
     end else begin
-        if (load == 1'b1 ) begin
+        if (load) begin
             internal <= reg_in;
+        end else if (enable) begin
+            reg_out <= internal; 
         end
     end
-
-    reg_out <= internal; 
 end
 
 // Dump waves

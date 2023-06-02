@@ -1,7 +1,8 @@
 module alu #(
     parameter WIDTH = 8
 ) (
-    input logic sum, sub,
+    input logic clk, rst,
+    input logic sum, sub, fi,
     input logic [WIDTH-1:0] a, b,
     output logic [WIDTH-1:0] out,
     //output logic carry
@@ -9,6 +10,7 @@ module alu #(
 );
 
 reg[WIDTH:0] im;
+reg[2:0] flags;
 
 always_comb begin : behaviour
     if (sum) begin
