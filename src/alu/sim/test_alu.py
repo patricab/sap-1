@@ -9,27 +9,26 @@ from cocotb.binary import BinaryValue
 async def add(dut):
     clock = Clock(dut.clk, 10, units="us")  # Create a 10us period clock on port clk
     cocotb.start_soon(clock.start())  # Start the clock
+    dut.add = dut.sub = dut.fi = 0
+    dut.load_a = dut.load_b = dut.en_a = dut.en_b = 0
+
     dut.rst = 1
-    dut.add = dut.sub = 0
-    dut.load_a = dut.load_b = 0
     await Timer(10, units="us")
     dut.rst = 0
 
     # Load A/B
-    dut.load_a = 1
-    dut.load_b = 1
+    dut.load_a = dut.load_b = 1
     dut.a = 2
     dut.b = 2
-    await Timer(10, units="us")
-    dut.load_a = 0
-    dut.load_b = 0
+    await Timer(20, units="us")
+    dut.load_a = dut.load_b = 0
 
     # Execute ALU
+    dut.en_a = dut.en_b = 1
     dut.add = 1
-    await Timer(10, units="us")
 
     # Check output
-    await Timer(10, units="us")
+    await Timer(20, units="us")
     await RisingEdge(dut.clk)
     print(dut.out.value.binstr)
     assert dut.out.value == 4, "Mismatch in addition"
@@ -38,9 +37,10 @@ async def add(dut):
 async def add_carry(dut):
     clock = Clock(dut.clk, 10, units="us")  # Create a 10us period clock on port clk
     cocotb.start_soon(clock.start())  # Start the clock
+    dut.add = dut.sub = dut.fi = 0
+    dut.load_a = dut.load_b = dut.en_a = dut.en_b = 0
+
     dut.rst = 1
-    dut.add = dut.sub = 0
-    dut.load_a = dut.load_b = 0
     await Timer(10, units="us")
     dut.rst = 0
 
@@ -54,8 +54,10 @@ async def add_carry(dut):
     dut.load_b = 0
 
     # Execute ALU
+    dut.en_a = 1
+    dut.en_b = 1
     dut.add = 1
-    await Timer(10, units="us")
+    fi = 1;
 
     # Check output
     await Timer(10, units="us")
@@ -69,7 +71,7 @@ async def sub(dut):
     clock = Clock(dut.clk, 10, units="us")  # Create a 10us period clock on port clk
     cocotb.start_soon(clock.start())  # Start the clock
     dut.rst = 1
-    dut.add = dut.sub = 0
+    dut.add = dut.sub = dut.fi = 0
     dut.load_a = dut.load_b = 0
     await Timer(10, units="us")
     dut.rst = 0
@@ -84,6 +86,8 @@ async def sub(dut):
     dut.load_b = 0
 
     # Execute ALU
+    dut.en_a = 1
+    dut.en_b = 1
     dut.sub = 1
     await Timer(10, units="us")
 
@@ -98,7 +102,7 @@ async def sub_zero(dut):
     clock = Clock(dut.clk, 10, units="us")  # Create a 10us period clock on port clk
     cocotb.start_soon(clock.start())  # Start the clock
     dut.rst = 1
-    dut.add = dut.sub = 0
+    dut.add = dut.sub = dut.fi = 0
     dut.load_a = dut.load_b = 0
     await Timer(10, units="us")
     dut.rst = 0
@@ -113,7 +117,10 @@ async def sub_zero(dut):
     dut.load_b = 0
 
     # Execute ALU
+    dut.en_a = 1
+    dut.en_b = 1
     dut.sub = 1
+    fi = 1
     await Timer(10, units="us")
 
     # Check output
