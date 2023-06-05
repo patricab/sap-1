@@ -17,7 +17,7 @@ begin
     end else begin
         if (load) begin
             internal <= reg_in;
-        end else if (enable) begin
+        end if (enable) begin
             reg_out <= internal; 
         end
     end

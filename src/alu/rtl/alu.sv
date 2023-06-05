@@ -13,8 +13,9 @@ reg[1:0] flags; // 1: Carry, 0: Zero
 
 always @(posedge clk) begin
     if (rst) begin
-        flags <= 2'b0;
         im <= 8'b0;
+        out <= 8'b0;
+        flags <= 2'b0;
     end else if (sum) begin
         im <= a + b;
     end else if (sub) begin
@@ -35,9 +36,9 @@ always @(posedge clk) begin
 end
 
 // Dump waves
-// initial begin
-//     $dumpfile("alu.vcd");
-//     $dumpvars(1, alu);
-// end
+//initial begin
+//    $dumpfile("alu.vcd");
+//    $dumpvars(1, alu);
+//end
     
 endmodule
