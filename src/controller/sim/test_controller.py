@@ -5,18 +5,22 @@ from cocotb.triggers import RisingEdge
 from cocotb.triggers import Timer
 from cocotb.binary import BinaryValue
 
-SIG_HLT       = 11;
-SIG_PC_INC    = 10;
-SIG_PC_EN     = 9;
-SIG_MEM_LOAD  = 8;
-SIG_MEM_EN    = 7;
-SIG_IR_LOAD   = 6;
-SIG_IR_EN     = 5;
-SIG_A_LOAD    = 4;
-SIG_A_EN      = 3;
-SIG_B_LOAD    = 2;
-SIG_ADDER_SUB = 1;
-SIG_ADDER_EN  = 0;
+FI  = 15;
+JMP = 14;
+CO  = 13;
+CI  = 12;
+OI  = 11;
+BI  = 10;
+SUB = 9;
+ALO = 8
+AI  = 7;
+AO  = 6;
+II  = 5;
+IO  = 4;
+RI  = 3;
+RO  = 2;
+MI  = 1;
+HLT = 0;
 
 OP_NOP = 0;
 OP_LDA = 1;
@@ -44,13 +48,13 @@ async def fetch_pc(dut):
     dut.rst = 0
 
     # Stage 0
-    ctrl = 1 << SIG_PC_EN | 1 << SIG_MEM_LOAD
+    ctrl = 1 << CO | 1 << MI
     print(dut.out.value.binstr)
     assert dut.out.value == ctrl, "Stage 0 mismatch"
     await Timer(10, units="us")
     
     # Stage 1
-    ctrl = 1 << SIG_PC_INC
+    ctrl = 1 << RO | II | 
     print(dut.out.value.binstr)
     assert dut.out.value == ctrl, "Stage 1 mismatch"
     await Timer(10, units="us")

@@ -5,18 +5,22 @@ module controller(
 	output[11:0] out
 );
 
-localparam SIG_HLT       = 11;
-localparam SIG_PC_INC    = 10;
-localparam SIG_PC_EN     = 9;
-localparam SIG_MEM_LOAD  = 8;
-localparam SIG_MEM_EN    = 7;
-localparam SIG_IR_LOAD   = 6;
-localparam SIG_IR_EN     = 5;
-localparam SIG_A_LOAD    = 4;
-localparam SIG_A_EN      = 3;
-localparam SIG_B_LOAD    = 2;
-localparam SIG_ADDER_SUB = 1;
-localparam SIG_ADDER_EN  = 0;
+localparam FI  = 15;
+localparam JMP = 14;
+localparam CO  = 13;
+localparam CI  = 12;
+localparam OI  = 11;
+localparam BI  = 10;
+localparam SUB = 9;
+localparam ALO = 8
+localparam AI  = 7;
+localparam AO  = 6;
+localparam II  = 5;
+localparam IO  = 4;
+localparam RI  = 3;
+localparam RO  = 2;
+localparam MI  = 1;
+localparam HLT = 0;
 
 localparam OP_LDA = 4'h01;
 localparam OP_ADD = 4'h02;
@@ -49,25 +53,24 @@ always @(*) begin
 
 	case (stage)
 		0: begin
-			ctrl_word[SIG_PC_EN] = 1;
-			ctrl_word[SIG_MEM_LOAD] = 1;
+			ctrl_word[CO] = 1;
+			ctrl_word[MI] = 1;
 		end
 		1: begin
-			ctrl_word[SIG_PC_INC] = 1;
+			ctrl_word[MI] = 1;
 		end
 		2: begin
-			ctrl_word[SIG_MEM_EN] = 1;
-			ctrl_word[SIG_IR_LOAD] = 1;
+			ctrl_word[II] = 1;
+			ctrl_word[CI] = 1;
 		end
 		3: begin
 			case (opcode)
 				OP_LDA: begin
-					ctrl_word[SIG_IR_EN] = 1;
-					ctrl_word[SIG_MEM_LOAD] = 1;
+					ctrl_word[IO] = 1;
+					ctrl_word[MI] = 1;
 				end
 				OP_ADD: begin
-					ctrl_word[SIG_IR_EN] = 1;
-					ctrl_word[SIG_MEM_LOAD] = 1;
+					ctrl_word[AI] = 1;
 				end
 				OP_SUB: begin
 					ctrl_word[SIG_IR_EN] = 1;

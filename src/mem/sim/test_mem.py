@@ -19,7 +19,6 @@ async def test_mem(dut):
         dut.load = 1
         await Timer(20, units="us")
         dut.load = 0
-        await Timer(10, units="us")
         await RisingEdge(dut.clk)
         # print(dut.out.value.binstr)
         print(dut.out.value)
