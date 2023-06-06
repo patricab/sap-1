@@ -6,7 +6,7 @@ from cocotb.triggers import Timer
 from cocotb.binary import BinaryValue
 
 @cocotb.test()
-async def test_mem(dut):
+async def test_ram(dut):
     clock = Clock(dut.clk, 10, units="us")
     cocotb.start_soon(clock.start())  # Start the clock
 

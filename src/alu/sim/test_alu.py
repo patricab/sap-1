@@ -10,7 +10,7 @@ async def add(dut):
     clock = Clock(dut.clk, 10, units="us")  # Create a 10us period clock on port clk
     cocotb.start_soon(clock.start())  # Start the clock
     dut.rst = 1
-    dut.add = dut.sub = dut.fi = 0
+    dut.sub = dut.fi = 0
     dut.load_a = dut.load_b = dut.en_a = dut.en_b = 0
     await Timer(10, units="us")
     dut.rst = 0
@@ -22,13 +22,13 @@ async def add(dut):
     dut.load_a = dut.load_b = 0
 
     # Execute ALU
-    dut.add = 1
     dut.en_a = dut.en_b = 1
     await Timer(10, units="us")
     dut.en_a = dut.en_b = 0
+    dut.alo = 1
 
     # Check output
-    await Timer(20, units="us")
+    await Timer(10, units="us")
     await RisingEdge(dut.clk)
     print(dut.out.value.binstr)
     assert dut.out.value == 4, "Mismatch in addition"
@@ -37,7 +37,7 @@ async def add(dut):
 async def add_carry(dut):
     clock = Clock(dut.clk, 10, units="us")  # Create a 10us period clock on port clk
     cocotb.start_soon(clock.start())  # Start the clock
-    dut.add = dut.sub = dut.fi = 0
+    dut.sub = dut.fi = 0
     dut.load_a = dut.load_b = dut.en_a = dut.en_b = 0
 
     dut.rst = 1
@@ -53,13 +53,13 @@ async def add_carry(dut):
 
     # Execute ALU
     dut.fi = 1;
-    dut.add = 1
     dut.en_a = dut.en_b = 1
     await Timer(10, units="us")
     dut.en_a = dut.en_b = 0
+    dut.alo = 1
 
     # Check output
-    await Timer(30, units="us")
+    await Timer(10, units="us")
     await RisingEdge(dut.clk)
     print(dut.out.value.binstr)
     assert dut.carry.value == 1, "No carry flag"
@@ -70,7 +70,7 @@ async def sub(dut):
     clock = Clock(dut.clk, 10, units="us")  # Create a 10us period clock on port clk
     cocotb.start_soon(clock.start())  # Start the clock
     dut.rst = 1
-    dut.add = dut.sub = dut.fi = 0
+    dut.sub = dut.fi = 0
     dut.load_a = dut.load_b = 0
     await Timer(10, units="us")
     dut.rst = 0
@@ -87,9 +87,10 @@ async def sub(dut):
     dut.sub = 1
     await Timer(10, units="us")
     dut.en_a = dut.en_b = 0
+    dut.alo = 1
 
     # Check output
-    await Timer(20, units="us")
+    await Timer(10, units="us")
     await RisingEdge(dut.clk)
     print(dut.out.value.binstr)
     assert dut.out.value == 4, "Mismatch in subtraction"
@@ -99,7 +100,7 @@ async def sub_zero(dut):
     clock = Clock(dut.clk, 10, units="us")  # Create a 10us period clock on port clk
     cocotb.start_soon(clock.start())  # Start the clock
     dut.rst = 1
-    dut.add = dut.sub = dut.fi = 0
+    dut.sub = dut.fi = 0
     dut.load_a = dut.load_b = 0
     await Timer(10, units="us")
     dut.rst = 0
@@ -117,9 +118,10 @@ async def sub_zero(dut):
     dut.en_a = dut.en_b = 1
     await Timer(10, units="us")
     dut.en_a = dut.en_b = 0
+    dut.alo = 1
 
     # Check output
-    await Timer(30, units="us")
+    await Timer(10, units="us")
     await RisingEdge(dut.clk)
     print(dut.out.value.binstr)
     assert dut.zero.value == 1, "No zero flag"

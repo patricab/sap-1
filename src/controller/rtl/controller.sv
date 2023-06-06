@@ -18,7 +18,7 @@ localparam AO  = 6;
 localparam II  = 5;
 localparam IO  = 4;
 localparam RI  = 3;
-localparam RO  = 2;
+// localparam RO  = 2;
 localparam MI  = 1;
 localparam HLT = 0;
 
@@ -33,7 +33,7 @@ localparam OP_JZ  = 4'h08;
 localparam OP_OUT = 4'h0E;
 localparam OP_HLT = 4'h0F;
 
-reg[2:0]  stage;
+reg[3:0]  stage;
 reg[11:0] ctrl_word;
 
 always @(negedge clk, posedge rst) begin
@@ -70,11 +70,12 @@ always @(*) begin
 					ctrl_word[MI] = 1;
 				end
 				OP_ADD: begin
-					ctrl_word[AI] = 1;
+					ctrl_word[IO] = 1;
+					ctrl_word[MI] = 1;
 				end
 				OP_SUB: begin
-					ctrl_word[SIG_IR_EN] = 1;
-					ctrl_word[SIG_MEM_LOAD] = 1;
+					ctrl_word[IO] = 1;
+					ctrl_word[MI] = 1;
 				end
 				OP_HLT: begin
 					ctrl_word[SIG_HLT] = 1;
@@ -84,29 +85,63 @@ always @(*) begin
 		4: begin
 			case (opcode)
 				OP_LDA: begin
-					ctrl_word[SIG_MEM_EN] = 1;
-					ctrl_word[SIG_A_LOAD] = 1;
+					ctrl_word[MI] = 1;
 				end
 				OP_ADD: begin
-					ctrl_word[SIG_MEM_EN] = 1;
-					ctrl_word[SIG_B_LOAD] = 1;
+					ctrl_word[MI] = 1;
 				end
 				OP_SUB: begin
-					ctrl_word[SIG_MEM_EN] = 1;
-					ctrl_word[SIG_B_LOAD] = 1;
+					ctrl_word[MI] = 1;
 				end
 			endcase
 		end
 		5: begin
 			case (opcode)
+				OP_LDA: begin
+					ctrl_word[AI] = 1;
+				end
 				OP_ADD: begin
-					ctrl_word[SIG_ADDER_EN] = 1;
-					ctrl_word[SIG_A_LOAD] = 1;
+					ctrl_word[BI] = 1;
 				end
 				OP_SUB: begin
 					ctrl_word[SIG_ADDER_SUB] = 1;
 					ctrl_word[SIG_ADDER_EN] = 1;
 					ctrl_word[SIG_A_LOAD] = 1;
+				end
+			endcase
+		end
+		6: begin
+			case (opcode)
+				OP_ADD: begin
+					ctrl_word[ALO] = 1;
+				end
+				OP_SUB: begin
+					ctrl_word[SUB] = 1;
+					ctrl_word[ALO] = 1;
+				end
+			endcase
+		end
+		7: begin
+			case (opcode)
+				OP_ADD: begin
+					ctrl_word[ALO] = 1;
+				end
+				OP_SUB: begin
+					ctrl_word[ALO] = 1;
+				end
+			endcase
+		end
+		8: begin
+			case (opcode)
+				OP_ADD: begin
+					ctrl_word[ALO] = 1;
+					ctrl_word[AI] = 1;
+					ctrl_word[FI] = 1;
+				end
+				OP_SUB: begin
+					ctrl_word[ALO] = 1;
+					ctrl_word[AI] = 1;
+					ctrl_word[FI] = 1;
 				end
 			endcase
 		end
