@@ -12,7 +12,7 @@ localparam CI  = 12;
 localparam OI  = 11;
 localparam BI  = 10;
 localparam SUB = 9;
-localparam ALO = 8
+localparam ALO = 8;
 localparam AI  = 7;
 localparam AO  = 6;
 localparam II  = 5;
@@ -78,7 +78,7 @@ always @(*) begin
 					ctrl_word[MI] = 1;
 				end
 				OP_HLT: begin
-					ctrl_word[SIG_HLT] = 1;
+					ctrl_word[HLT] = 1;
 				end
 			endcase
 		end
@@ -104,9 +104,9 @@ always @(*) begin
 					ctrl_word[BI] = 1;
 				end
 				OP_SUB: begin
-					ctrl_word[SIG_ADDER_SUB] = 1;
-					ctrl_word[SIG_ADDER_EN] = 1;
-					ctrl_word[SIG_A_LOAD] = 1;
+					// ctrl_word[ADDER_SUB] = 1;
+					// ctrl_word[ADDER_EN] = 1;
+					// ctrl_word[A_LOAD] = 1;
 				end
 			endcase
 		end

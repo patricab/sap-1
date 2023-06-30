@@ -5,14 +5,14 @@ from cocotb.triggers import RisingEdge
 from cocotb.triggers import Timer
 from cocotb.binary import BinaryValue
 
-FI  = 15;
-JMP = 14;
-CO  = 13;
-CI  = 12;
-OI  = 11;
-BI  = 10;
+FI = int("F", 16);
+JMP = int("E", 16);
+CO  = int("D", 16);
+CI  = int("C", 16);
+OI  = int("B", 16);
+BI  = int("A", 16);
 SUB = 9;
-ALO = 8
+ALO = 8;
 AI  = 7;
 AO  = 6;
 II  = 5;
@@ -54,7 +54,7 @@ async def fetch_pc(dut):
     await Timer(10, units="us")
     
     # Stage 1
-    ctrl = 1 << RO | II | 
+    ctrl = 1 << RO | II 
     print(dut.out.value.binstr)
     assert dut.out.value == ctrl, "Stage 1 mismatch"
     await Timer(10, units="us")
